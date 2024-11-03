@@ -42,6 +42,7 @@
         h1 {
             font-family: "Inknut Antiqua", serif;
             color: #000;
+            font-size: 30px;
         }
     </style>
 </head>
@@ -115,7 +116,7 @@
                 currentBearing = calculateBearing(userLat, userLng, targetLatitude, targetLongitude);
                 const distance = calculateDistance(userLat, userLng, targetLatitude, targetLongitude);
                 
-                document.getElementById('distance').innerText = distance.toFixed(0) + 'm';
+                document.getElementById('distance').innerText = distance.toFixed(0) + ' m';
             }, function(error) {
                 console.error("Error getting location: ", error);
                 alert("Error getting location");
