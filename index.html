@@ -96,7 +96,6 @@
         }
 
         let currentBearing = 0;
-        let initialAlpha = null;
 
         function smoothAngle(angle, prevAngle) {
             const alpha = 0.1;
@@ -121,6 +120,8 @@
         } else {
             alert("Geolocation not supported");
         }
+
+        let initialAlpha = null;
 
         if (window.DeviceOrientationEvent) {
             window.addEventListener('deviceorientation', function(event) {
