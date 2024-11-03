@@ -38,7 +38,6 @@
     </style>
 </head>
 <body>
-    Test
     <div class="compass">
         <div class="needle" id="needle"></div>
     </div>
@@ -90,7 +89,7 @@
             window.addEventListener('deviceorientation', function(event) {
                 let alpha = event.alpha; // Compass heading
                 if (typeof alpha === 'number') {
-                    const heading = (360 + currentBearing - alpha) % 360;
+                    const heading = (alpha - currentBearing + 360) % 360;
                     document.getElementById('needle').style.transform = 'rotate(' + heading + 'deg)';
                 }
             }, true);
