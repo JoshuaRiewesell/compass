@@ -49,7 +49,7 @@
     <div class="compass">
         <div class="needle" id="needle"></div>
     </div>
-    <h1 id="distance">Entfernung: 0 Meter</h1>
+    <h1 id="distance">Entfernung wird  berechnet...</h1>
 
     <script>
         const targetLatitude = 37.7749; // Replace with your target latitude
@@ -101,7 +101,7 @@
                 const distance = calculateDistance(userLat, userLng, targetLatitude, targetLongitude);
                 
                 // Update the distance in the heading
-                document.getElementById('distance').innerText = 'Entfernung: ' + distance.toFixed(0) + ' Meter';
+                document.getElementById('distance').innerText = distance.toFixed(0) + ' Meter';
             }, function(error) {
                 console.error("Error getting location: ", error);
                 alert("Error getting location");
