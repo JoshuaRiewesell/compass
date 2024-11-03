@@ -52,8 +52,15 @@
     <h1 id="distance">Entfernung wird  berechnet...</h1>
 
     <script>
-        const targetLatitude = 37.7749; // Replace with your target latitude
-        const targetLongitude = -122.4194; // Replace with your target longitude
+        // Function to get URL parameters
+        function getUrlParameter(name) {
+            const urlParams = new URLSearchParams(window.location.search);
+            return urlParams.get(name);
+        }
+
+        // Get latitude and longitude from URL parameters or use default values
+        const targetLatitude = parseFloat(getUrlParameter('lat')) || 49.4827;
+        const targetLongitude = parseFloat(getUrlParameter('lng')) || 8.47747;
 
         function calculateBearing(startLat, startLng, destLat, destLng) {
             const startLatRad = toRadians(startLat);
