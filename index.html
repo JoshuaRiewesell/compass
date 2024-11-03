@@ -42,7 +42,13 @@
         h1 {
             font-family: "Inknut Antiqua", serif;
             color: #000;
-            font-size: 30px;
+            font-size: 40px;
+        }
+        .calibrate-button {
+            margin-top: 20px;
+            padding: 10px 20px;
+            font-size: 18px;
+            cursor: pointer;
         }
     </style>
 </head>
@@ -51,6 +57,7 @@
         <div class="needle" id="needle"></div>
     </div>
     <h1 id="distance">Entfernung wird berechnet...</h1>
+    <button class="calibrate-button" id="calibrate-button">Kalibrieren</button>
 
     <script>
         function getUrlParameter(name) {
@@ -131,11 +138,10 @@
             window.addEventListener('deviceorientation', function(event) {
                 let alpha = event.alpha;
 
-                if (initialAlpha === null) {
-                    initialAlpha = alpha;
-                }
-
                 if (typeof alpha === 'number') {
+                    if (initialAlpha === null) {
+                        initialAlpha = alpha;
+                    }
                     const adjustedHeading = (alpha - initialAlpha + currentBearing + 360) % 360;
                     const smoothedHeading = smoothAngle(adjustedHeading, previousHeading);
                     document.getElementById('needle').style.transform = 'rotate(' + smoothedHeading + 'deg)';
@@ -145,6 +151,10 @@
         } else {
             alert("Device Orientation not supported");
         }
+
+        document.getElementById('calibrate-button').addEventListener('click', function() {
+            initialAlpha = null;  // Reset the initial alpha when the button is clicked
+        });
     </script>
 </body>
 </html>
