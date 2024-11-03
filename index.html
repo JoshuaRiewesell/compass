@@ -5,8 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Compass</title>
     <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inknut+Antiqua:wght@300;400;500;600;700;800;900&display=swap');
+
         body {
             display: flex;
+            flex-direction: column; /* Change to column to stack elements */
             justify-content: center;
             align-items: center;
             height: 100vh;
@@ -32,8 +35,12 @@
             height: 150px;
             background-color: #FFD700;
             top: 0;
-            left: 50%;
+            left: calc(50% - 5px);
             transform-origin: bottom center;
+        }
+        h1 {
+            font-family: "Inknut Antiqua", serif;
+            color: #000
         }
     </style>
 </head>
@@ -41,6 +48,7 @@
     <div class="compass">
         <div class="needle" id="needle"></div>
     </div>
+    <h1 id="distance">Entfernung: 0 Meter</h1>
 
     <script>
         const targetLatitude = 37.7749; // Replace with your target latitude
@@ -69,6 +77,18 @@
             return radians * 180 / Math.PI;
         }
 
+        function calculateDistance(lat1, lon1, lat2, lon2) {
+            const R = 6371; // Radius of the Earth in km
+            const dLat = toRadians(lat2 - lat1);
+            const dLon = toRadians(lon2 - lon1);
+            const a = Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+                      Math.cos(toRadians(lat1)) * Math.cos(toRadians(lat2)) *
+                      Math.sin(dLon / 2) * Math.sin(dLon / 2);
+            const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+            const distance = R * c; // Distance in km
+            return distance;
+        }
+
         let currentBearing = 0;
 
         if (navigator.geolocation) {
@@ -77,6 +97,10 @@
                 const userLng = position.coords.longitude;
 
                 currentBearing = calculateBearing(userLat, userLng, targetLatitude, targetLongitude);
+                const distance = calculateDistance(userLat, userLng, targetLatitude, targetLongitude);
+                
+                // Update the distance in the heading
+                document.getElementById('distance').innerText = 'Entfernung: ' + distance.toFixed(2) + ' Meter';
             }, function(error) {
                 console.error("Error getting location: ", error);
                 alert("Error getting location");
